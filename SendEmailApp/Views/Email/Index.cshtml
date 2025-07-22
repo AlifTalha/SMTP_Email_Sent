@@ -1,0 +1,108 @@
+﻿@model SendEmailApp.Models.EmailModel
+@{
+    ViewData["Title"] = "Send Email";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f7f8;
+        padding: 40px;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #444;
+    }
+
+    form {
+        max-width: 500px;
+        margin: auto;
+        background: #ffffff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #555;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        input:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    p {
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+    }
+</style>
+
+<h2>Send Email</h2>
+
+<form asp-action="Index" method="post" enctype="multipart/form-data">
+    <div>
+        <label>To Email:</label>
+        <input type="email" asp-for="ToEmail" required />
+    </div>
+
+    <div>
+        <label>Subject:</label>
+        <input type="text" asp-for="Subject" required />
+    </div>
+
+    <div>
+        <label>Message Body:</label>
+        <textarea asp-for="MessageBody" rows="5" required></textarea>
+    </div>
+
+    <div>
+        <label>Attachment (optional):</label>
+        <input type="file" asp-for="Attachment" />
+    </div>
+
+    <button type="submit">Send Email</button>
+</form>
+
+@if (ViewBag.Status != null)
+{
+    <p style="color: @(ViewBag.Status.ToString().StartsWith("✅") ? "green" : "red");">@ViewBag.Status</p>
+}
